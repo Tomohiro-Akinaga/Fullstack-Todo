@@ -15,7 +15,7 @@ export class TodosService {
     return this.prisma.todo.findMany();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.prisma.todo.findUnique({ where: { id } });
   }
 
