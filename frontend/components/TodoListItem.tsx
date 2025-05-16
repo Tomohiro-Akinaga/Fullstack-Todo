@@ -6,10 +6,7 @@ import { deleteTodo } from "@/app/todos/actions";
 type Props = { id: string; text: string };
 
 export function TodoListItem({ id, text }: Props) {
-  const handleDeleteTodo = async () => {
-    const res = await deleteTodo(id);
-    console.log("レス", res);
-  };
+  const handleDeleteTodo = async () => await deleteTodo(id);
 
   return (
     <div className="flex gap-2 items-center">
