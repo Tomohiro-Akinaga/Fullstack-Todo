@@ -16,6 +16,14 @@ export async function createTodo(formData: FormData) {
   revalidatePath("/");
 }
 
+export async function updateTodo(formData: FormData) {
+  await fetch("https://fullstack-todo-h1oh.onrender.com/todos", {
+    method: "PATCH",
+    body: JSON.stringify({ text: formData.get("text") }),
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 export async function deleteTodo(id: string) {
   await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${id}`, { method: "DELETE" });
   revalidatePath("/");

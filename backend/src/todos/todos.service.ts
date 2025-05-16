@@ -19,8 +19,8 @@ export class TodosService {
     return this.prisma.todo.findUnique({ where: { id } });
   }
 
-  update(id: number, updateTodoDto: UpdateTodoDto) {
-    return updateTodoDto;
+  update(id: string, updateTodoDto: UpdateTodoDto) {
+    return this.prisma.todo.update({ where: { id }, data: updateTodoDto });
   }
 
   remove(id: string) {
