@@ -22,6 +22,7 @@ export async function updateTodo(formData: FormData) {
     body: JSON.stringify({ text: formData.get("text") }),
     headers: { "Content-Type": "application/json" },
   });
+  revalidatePath("/");
 }
 
 export async function deleteTodo(id: string) {
