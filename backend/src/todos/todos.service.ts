@@ -23,7 +23,7 @@ export class TodosService {
     return updateTodoDto;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} todo`;
+  remove(id: string) {
+    return this.prisma.todo.delete({ where: { id } });
   }
 }
