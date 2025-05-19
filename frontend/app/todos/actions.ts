@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 export async function getTodo() {
-  const todos = await fetch("https://fullstack-todo-h1oh.onrender.com/todos", { method: "GET" });
+  const todos = await fetch("https://fullstack-todo-h1oh.onrender.com/todos", { cache: "no-store" });
   return todos.json();
 }
 
@@ -13,20 +13,19 @@ export async function createTodo(formData: FormData) {
     body: JSON.stringify({ text: formData.get("text") }),
     headers: { "Content-Type": "application/json" },
   });
-  revalidatePath("/");
+  revalidatePath("/todos");
 }
 
 export async function updateTodo(formData: FormData) {
-  console.log("formdataです", formData);
   await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${formData.get("id")}`, {
     method: "PATCH",
     body: JSON.stringify({ text: formData.get("text") }),
     headers: { "Content-Type": "application/json" },
   });
-  revalidatePath("/");
+  revalidatePath("/todos");
 }
 
 export async function deleteTodo(id: string) {
   await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${id}`, { method: "DELETE" });
-  revalidatePath("/");
+  revalidatePath("/todos");
 }
