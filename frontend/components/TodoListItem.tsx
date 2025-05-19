@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Input } from "./ui";
 import { deleteTodo, updateTodo } from "@/app/todos/actions";
 
@@ -10,14 +10,10 @@ export function TodoListItem({ id, text }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const handleDeleteTodo = async () => await deleteTodo(id);
 
-  const handleUpdateTodo = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsEditing(false);
-  };
+  useEffect(() => setIsEditing(false), [text]);
 
-  // NOTE:server actionsを使うならサーバーコンポーネントにしないと。全てformで実行する
   return (
-    <div>
+    <>
       {!isEditing && (
         <div className="flex gap-2 items-center">
           <p>{text}</p>
@@ -33,11 +29,11 @@ export function TodoListItem({ id, text }: Props) {
         <form className="flex gap-2" action={updateTodo}>
           <input type="hidden" name="id" value={id} />
           <Input name="text" defaultValue={text} />
-          <Button className="cursor-pointer" type="submit" onClick={(e) => handleUpdateTodo(e)}>
+          <Button type="submit" className="cursor-pointer">
             Save
           </Button>
         </form>
       )}
-    </div>
+    </>
   );
 }

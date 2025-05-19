@@ -17,12 +17,13 @@ export async function createTodo(formData: FormData) {
 }
 
 export async function updateTodo(formData: FormData) {
-  await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${formData.get("id")}`, {
+  const res = await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${formData.get("id")}`, {
     method: "PATCH",
     body: JSON.stringify({ text: formData.get("text") }),
     headers: { "Content-Type": "application/json" },
   });
   revalidatePath("/todos");
+  return res.json();
 }
 
 export async function deleteTodo(id: string) {
