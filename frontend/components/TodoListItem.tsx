@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button, Input } from "./ui";
 import { deleteTodo, updateTodo } from "@/app/todos/actions";
 
@@ -8,15 +8,22 @@ type Props = { id: string; text: string };
 
 export function TodoListItem({ id, text }: Props) {
   const [isEditing, setIsEditing] = useState(false);
+  const [localText, setLocalText] = useState(text);
+
   const handleDeleteTodo = async () => await deleteTodo(id);
 
-  useEffect(() => setIsEditing(false), [text]);
+  const handleUpdateTodo = async (formData: FormData) => {
+    const newText = formData.get("text") as string;
+    await updateTodo(formData);
+    setLocalText(newText);
+    setIsEditing(false);
+  };
 
   return (
     <>
       {!isEditing && (
         <div className="flex gap-2 items-center">
-          <p>{text}</p>
+          <p>{localText}</p>
           <Button className="cursor-pointer" onClick={handleDeleteTodo}>
             Delete
           </Button>
@@ -25,10 +32,11 @@ export function TodoListItem({ id, text }: Props) {
           </Button>
         </div>
       )}
+
       {isEditing && (
-        <form className="flex gap-2" action={updateTodo}>
+        <form className="flex gap-2" action={handleUpdateTodo}>
           <input type="hidden" name="id" value={id} />
-          <Input name="text" defaultValue={text} />
+          <Input name="text" defaultValue={localText} />
           <Button type="submit" className="cursor-pointer">
             Save
           </Button>

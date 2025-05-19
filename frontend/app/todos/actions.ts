@@ -26,7 +26,7 @@ export async function updateTodo(formData: FormData) {
   return formData.get("text");
 }
 
-export async function deleteTodo(formData: FormData) {
-  await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${formData.get("id")}`, { method: "DELETE" });
+export async function deleteTodo(id: string) {
+  await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${id}`, { method: "DELETE" });
   revalidatePath("/todos");
 }
