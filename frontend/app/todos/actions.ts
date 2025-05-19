@@ -17,6 +17,7 @@ export async function createTodo(formData: FormData) {
 }
 
 export async function updateTodo(formData: FormData) {
+  console.log("formdataです", formData);
   await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${formData.get("id")}`, {
     method: "PATCH",
     body: JSON.stringify({ text: formData.get("text") }),
