@@ -13,7 +13,7 @@ export async function createTodo(formData: FormData) {
     body: JSON.stringify({ text: formData.get("text") }),
     headers: { "Content-Type": "application/json" },
   });
-  revalidatePath("/todos");
+  revalidatePath("/");
 }
 
 export async function updateTodo(formData: FormData) {
@@ -22,11 +22,10 @@ export async function updateTodo(formData: FormData) {
     body: JSON.stringify({ text: formData.get("text") }),
     headers: { "Content-Type": "application/json" },
   });
-  revalidatePath("/todos");
-  return formData.get("text");
+  revalidatePath("/");
 }
 
-export async function deleteTodo(id: string) {
-  await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${id}`, { method: "DELETE" });
-  revalidatePath("/todos");
+export async function deleteTodo(formData: FormData) {
+  await fetch(`https://fullstack-todo-h1oh.onrender.com/todos/${formData.get("id")}`, { method: "DELETE" });
+  revalidatePath("/");
 }
